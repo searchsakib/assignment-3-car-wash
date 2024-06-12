@@ -34,21 +34,21 @@ const userSchema = new Schema<TUser>(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 
-userSchema.pre('save', async function (next) {
-  const user = this;
-  user.password = await bcrypt.hash(
-    user.password,
+userSchema.pre('save', async function () {
+  this.password = await bcrypt.hash(
+    this.password,
     Number(config.bcrypt_salt_rounds)
   );
-  next();
 });
 
-userSchema.post('save', function (doc, next) {
-  doc.password = '';
-  next();
-});
+userSchema.methods.toJSON = function () {
+  const obj = this.toObject();
+  delete obj.password;
+  return obj;
+};
 
 export const User = model<TUser>('User', userSchema);
