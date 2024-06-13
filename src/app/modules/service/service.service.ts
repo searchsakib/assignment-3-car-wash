@@ -11,7 +11,7 @@ const getSingleServiceFromDB = async (id: string) => {
 };
 
 const getAllServicesFromDB = async () => {
-  const result = await Service.find({ isDeleted: false });
+  const result = await Service.find();
   return result;
 };
 

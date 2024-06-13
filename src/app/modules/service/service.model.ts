@@ -30,4 +30,14 @@ const serviceSchema = new Schema<TService>(
   }
 );
 
+//! Prevents from getAllServicesFromDB to access the deleted data
+serviceSchema.pre('find', function () {
+  this.find({ isDeleted: { $ne: true } });
+});
+
+//! Prevents from getSingleServiceFromDB to access the deleted data
+serviceSchema.pre('findOne', function () {
+  this.find({ isDeleted: { $ne: true } });
+});
+
 export const Service = model<TService>('Service', serviceSchema);
