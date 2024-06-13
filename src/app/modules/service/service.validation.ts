@@ -22,7 +22,7 @@ const updateServiceValidationSchema = z.object({
   }),
 });
 
-export const ServiceValidation = {
+export const ServiceValidations = {
   createServiceValidationSchema,
   updateServiceValidationSchema,
 };
