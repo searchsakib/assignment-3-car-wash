@@ -19,10 +19,11 @@ router.get('/', ServiceControllers.getAllServices);
 
 router.put(
   '/:id',
+  auth('admin'),
   validateRequest(ServiceValidations.updateServiceValidationSchema),
   ServiceControllers.updateService
 );
 
-router.delete('/:id', ServiceControllers.deleteService);
+router.delete('/:id', auth('admin'), ServiceControllers.deleteService);
 
 export const ServiceRoutes = router;
