@@ -41,9 +41,9 @@ const updateService = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await ServiceServices.updateServiceIntoDB(id, req.body);
   sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Service updated successfully',
+    success: result ? true : false,
+    statusCode: result ? httpStatus.OK : httpStatus.NOT_FOUND,
+    message: result ? 'Service updated successfully' : 'No Data Found',
     data: result,
   });
 });
@@ -52,9 +52,9 @@ const deleteService = catchAsync(async (req, res) => {
   const { id } = req.params;
   const result = await ServiceServices.deleteServiceFromDB(id);
   sendResponse(res, {
-    success: true,
-    statusCode: httpStatus.OK,
-    message: 'Service deleted successfully',
+    success: result ? true : false,
+    statusCode: result ? httpStatus.OK : httpStatus.NOT_FOUND,
+    message: result ? 'Service deleted successfully' : 'No Data Found',
     data: result,
   });
 });
