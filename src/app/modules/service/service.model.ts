@@ -40,4 +40,14 @@ serviceSchema.pre('findOne', function () {
   this.find({ isDeleted: { $ne: true } });
 });
 
+//! Prevents from updateServiceIntoDB to access the deleted data
+serviceSchema.pre('findOneAndUpdate', function () {
+  this.find({ isDeleted: { $ne: true } });
+});
+
+//! Prevents from deleteServiceFromDB to access the deleted data
+serviceSchema.pre('findOneAndDelete', function () {
+  this.find({ isDeleted: { $ne: true } });
+});
+
 export const Service = model<TService>('Service', serviceSchema);
