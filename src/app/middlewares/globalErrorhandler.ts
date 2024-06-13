@@ -60,6 +60,14 @@ const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
     ];
   }
 
+  if (statusCode === 401) {
+    return res.status(statusCode).json({
+      success: false,
+      statusCode,
+      message,
+    });
+  }
+
   //ultimate return
   return res.status(statusCode).json({
     success: false,
