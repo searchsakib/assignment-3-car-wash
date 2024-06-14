@@ -15,30 +15,34 @@ const createSlotIntoDB = async (paylod: TSlot) => {
   const endTimeSlot = paylod?.endTime;
 
   const startTimeInMinutes =
-    Number(startTimeSlot.split(':')[0]) * serviceDuration +
+    Number(startTimeSlot.split(':')[0]) * 60 +
     Number(startTimeSlot.split(':')[1]);
   const endTimeInMinutes =
-    Number(endTimeSlot.split(':')[0]) * serviceDuration +
-    Number(endTimeSlot.split(':')[1]);
+    Number(endTimeSlot.split(':')[0]) * 60 + Number(endTimeSlot.split(':')[1]);
 
   const totalDurationInMinutes = endTimeInMinutes - startTimeInMinutes;
 
-  const numberOfSlots = totalDurationInMinutes / serviceDuration;
+  const numberOfSlots = Math.ceil(totalDurationInMinutes / serviceDuration);
 
   //! generating slots
-  const timeIntervals: {
-    startTime: string;
-    endTime: string;
-  }[] = [];
+  const timeIntervals = [];
 
   for (let i = 0; i < numberOfSlots; i++) {
-    const startTime =
-      (Number(startTimeSlot.split(':')[0]) + i).toString() + ':00';
-    const endTime =
-      (Number(endTimeSlot.split(':')[0]) - (numberOfSlots - 1) + i).toString() +
-      ':00';
+    const start = startTimeInMinutes + i * serviceDuration;
+    const end = start + serviceDuration;
 
-    timeIntervals.push({ startTime, endTime });
+    const startTime =
+      String(Math.floor(start / 60)).padStart(2, '0') +
+      ':' +
+      String(start % 60).padStart(2, '0');
+    const endTime =
+      String(Math.floor(end / 60)).padStart(2, '0') +
+      ':' +
+      String(end % 60).padStart(2, '0');
+
+    if (end <= endTimeInMinutes) {
+      timeIntervals.push({ startTime, endTime });
+    }
   }
 
   const slots = timeIntervals.map((time) => {
