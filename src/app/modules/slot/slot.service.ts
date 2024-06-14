@@ -1,3 +1,4 @@
+import { Query } from 'mongoose';
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { Service } from '../service/service.model';
@@ -58,12 +59,21 @@ const createSlotIntoDB = async (paylod: TSlot) => {
   return result;
 };
 
-// const getAllAvailableSlotFromDB = async () => {
-//   const result = await Slot.find();
-//   return result;
-// };
+const getAllAvailableSlotFromDB = async (query: Record<string, unknown>) => {
+  const queryObj: Partial<{ service: string; date: string }> = {};
+  if (query?.date) {
+    queryObj.date = query.date as string;
+  }
+
+  if (query?.serviceId) {
+    queryObj.service = query.serviceId as string;
+  }
+
+  const result = await Slot.find(queryObj).populate('service');
+  return result;
+};
 
 export const SlotService = {
   createSlotIntoDB,
-  // getAllAvailableSlotFromDB,
+  getAllAvailableSlotFromDB,
 };
