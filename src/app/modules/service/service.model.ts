@@ -26,6 +26,7 @@ const serviceSchema = new Schema<TService>(
   },
   {
     timestamps: true,
+    versionKey: false,
   }
 );
 
