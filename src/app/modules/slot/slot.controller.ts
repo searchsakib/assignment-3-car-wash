@@ -1,7 +1,6 @@
 import httpStatus from 'http-status';
 import catchAsync from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
-import { Slot } from './slot.model';
 import { SlotService } from './slot.service';
 
 const createSlot = catchAsync(async (req, res) => {

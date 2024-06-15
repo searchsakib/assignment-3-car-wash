@@ -1,4 +1,3 @@
-import { Query } from 'mongoose';
 import httpStatus from 'http-status';
 import AppError from '../../errors/AppError';
 import { Service } from '../service/service.model';
@@ -60,8 +59,11 @@ const createSlotIntoDB = async (paylod: TSlot) => {
 };
 
 const getAllAvailableSlotFromDB = async (query: Record<string, unknown>) => {
-  const queryObj: Partial<{ service: string; date: string; isBooked: any }> =
-    {};
+  const queryObj: Partial<{
+    service: string;
+    date: string;
+    isBooked: Record<string, unknown>;
+  }> = {};
   if (query?.date) {
     queryObj.date = query.date as string;
   }

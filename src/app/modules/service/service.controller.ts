@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import catchAsync from '../../utils/catchAsync';
 import { ServiceServices } from './service.service';
 import sendResponse from '../../utils/sendResponse';

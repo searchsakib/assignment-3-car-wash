@@ -20,7 +20,7 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
       throw new AppError(httpStatus.NOT_FOUND, 'Customer not found');
     }
     //check is service exists or not
-    const serviceId: any = payload?.service;
+    const serviceId = payload?.service;
     const service = await Service.findById(serviceId);
     if (!service) {
       throw new AppError(httpStatus.NOT_FOUND, 'Service not found!');
