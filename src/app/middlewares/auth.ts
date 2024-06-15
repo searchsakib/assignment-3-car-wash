@@ -14,14 +14,14 @@ const auth = (...requiredRoles: TUserRoles[]) => {
     if (!token) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        'You have no access to this route'
+        'You have no access to this route',
       );
     }
 
     // checking if the given token is valid
     const decoded = jwt.verify(
       token as string,
-      config.jwt_access_secret as string
+      config.jwt_access_secret as string,
     ) as JwtPayload;
 
     // extracting email & role from decoded
@@ -33,14 +33,14 @@ const auth = (...requiredRoles: TUserRoles[]) => {
     if (!user) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        'You have no access to this route'
+        'You have no access to this route',
       );
     }
 
     if (!requiredRoles.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        'You have no access to this route'
+        'You have no access to this route',
       );
     }
     req.user = {

@@ -14,7 +14,7 @@ const signUp = async (payload: TUser) => {
 
 const login = async (payload: TLoginUser) => {
   const user = await User.findOne({ email: payload?.email }).select(
-    '+password'
+    '+password',
   );
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'User does not exists');

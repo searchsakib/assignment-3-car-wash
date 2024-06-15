@@ -10,7 +10,7 @@ router.post(
   '/',
   auth('user'),
   validateRequest(BookingValidations.createBookingValidationSchema),
-  BookingControllers.createBooking
+  BookingControllers.createBooking,
 );
 
 router.get('/', auth('admin'), BookingControllers.getAllBookings);

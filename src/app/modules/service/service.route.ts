@@ -10,7 +10,7 @@ router.post(
   '/',
   auth('admin'),
   validateRequest(ServiceValidations.createServiceValidationSchema),
-  ServiceControllers.createService
+  ServiceControllers.createService,
 );
 
 router.get('/:id', ServiceControllers.getSingleService);
@@ -21,7 +21,7 @@ router.put(
   '/:id',
   auth('admin'),
   validateRequest(ServiceValidations.updateServiceValidationSchema),
-  ServiceControllers.updateService
+  ServiceControllers.updateService,
 );
 
 router.delete('/:id', auth('admin'), ServiceControllers.deleteService);

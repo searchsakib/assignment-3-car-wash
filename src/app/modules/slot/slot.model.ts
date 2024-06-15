@@ -29,7 +29,7 @@ const slotSchema = new Schema<TSlot>(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 //! This is the culprit , so much time went to debug this, now its solution in slot.service.ts

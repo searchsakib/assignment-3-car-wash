@@ -35,13 +35,13 @@ const userSchema = new Schema<TUser>(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 userSchema.pre('save', async function () {
   this.password = await bcrypt.hash(
     this.password,
-    Number(config.bcrypt_salt_rounds)
+    Number(config.bcrypt_salt_rounds),
   );
 });
 

@@ -17,7 +17,7 @@ class QueryBuilder<T> {
           (field) =>
             ({
               [field]: { $regex: searchTerm, $options: 'i' },
-            } as FilterQuery<T>)
+            }) as FilterQuery<T>,
         ),
       });
     }

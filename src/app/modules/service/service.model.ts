@@ -27,7 +27,7 @@ const serviceSchema = new Schema<TService>(
   {
     timestamps: true,
     versionKey: false,
-  }
+  },
 );
 
 //! Prevents from getAllServicesFromDB to access the deleted data

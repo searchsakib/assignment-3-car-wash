@@ -29,7 +29,7 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
     if (service.isDeleted) {
       throw new AppError(
         httpStatus.BAD_REQUEST,
-        'Unable to book, service is deleted'
+        'Unable to book, service is deleted',
       );
     }
     //check slots exists or not
@@ -46,14 +46,14 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
     //creating booking- transaction-1
     const booking = await Booking.create(
       [{ ...payload, customer: customerId }],
-      { session }
+      { session },
     );
 
     //updating slot status: transaction-2
     await Slot.findByIdAndUpdate(
       payload.slot,
       { isBooked: 'booked' },
-      { new: true, session }
+      { new: true, session },
     );
 
     await session.commitTransaction();

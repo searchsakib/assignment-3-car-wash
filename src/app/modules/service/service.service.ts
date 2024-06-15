@@ -28,7 +28,7 @@ const deleteServiceFromDB = async (id: string) => {
     },
     {
       new: true,
-    }
+    },
   );
   return result;
 };
