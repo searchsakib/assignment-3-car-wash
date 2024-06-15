@@ -85,9 +85,9 @@ const getUserBookingsFromDB = async (user: JwtPayload) => {
   const customer = await User.findOne({ email: user?.email });
   const customerId = customer?._id;
   const result = await Booking.find({ customer: customerId })
-    .populate('customer')
     .populate('service')
-    .populate('slot');
+    .populate('slot')
+    .select('-customer');
   return !result.length ? [] : result;
 };
 
