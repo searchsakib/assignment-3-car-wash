@@ -49,13 +49,6 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
       { session }
     );
 
-    // Populate the booking
-    await booking[0].populate([
-      { path: 'customer', model: User },
-      { path: 'service', model: Service },
-      { path: 'slot', model: Slot },
-    ]);
-
     //updating slot status: transaction-2
     await Slot.findByIdAndUpdate(
       payload.slot,
@@ -64,8 +57,15 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
     );
 
     await session.commitTransaction();
+
+    // Populate the booking
+    const populatedBooking = await Booking.findById(booking[0]._id)
+      .populate('customer')
+      .populate('service')
+      .populate('slot');
+
     await session.endSession();
-    return booking[0];
+    return populatedBooking;
   } catch (err) {
     await session.abortTransaction();
     await session.endSession();
