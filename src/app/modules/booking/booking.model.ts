@@ -41,7 +41,7 @@ const bookingSchema = new Schema<TBooking>(
       unique: true,
     },
   },
-  { timestamps: true, versionKey: false }
+  { timestamps: true }
 );
 
 export const Booking = model<TBooking>('Booking', bookingSchema);
