@@ -75,9 +75,18 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
 
 const getAllBookingsFromDB = async () => {
   const result = await Booking.find()
-    .populate('customer')
-    .populate('service')
-    .populate('slot');
+    .populate({
+      path: 'customer',
+      select: '-role -createdAt -updatedAt',
+    })
+    .populate({
+      path: 'service',
+      select: '-createdAt -updatedAt',
+    })
+    .populate({
+      path: 'slot',
+      select: '-createdAt -updatedAt',
+    });
   return !result.length ? [] : result;
 };
 
@@ -85,8 +94,14 @@ const getUserBookingsFromDB = async (user: JwtPayload) => {
   const customer = await User.findOne({ email: user?.email });
   const customerId = customer?._id;
   const result = await Booking.find({ customer: customerId })
-    .populate('service')
-    .populate('slot')
+    .populate({
+      path: 'service',
+      select: '-createdAt -updatedAt',
+    })
+    .populate({
+      path: 'slot',
+      select: '-createdAt -updatedAt',
+    })
     .select('-customer');
   return !result.length ? [] : result;
 };
