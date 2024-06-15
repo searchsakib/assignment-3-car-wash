@@ -5,7 +5,6 @@ import { SlotValidations } from './slot.validation';
 import { SlotControllers } from './slot.controller';
 
 const router = express.Router();
-const router2 = express.Router();
 
 router.post(
   '/',
@@ -13,6 +12,8 @@ router.post(
   validateRequest(SlotValidations.createSlotValidationSchema),
   SlotControllers.createSlot
 );
+
+const router2 = express.Router();
 
 router2.get('/', SlotControllers.getAllAvailableSlot);
 
