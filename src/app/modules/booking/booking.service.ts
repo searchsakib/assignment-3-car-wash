@@ -48,6 +48,7 @@ const createBookingIntoDB = async (payload: TBooking, user: JwtPayload) => {
       [{ ...payload, customer: customerId }],
       { session }
     );
+
     // Populate the booking
     await booking[0].populate([
       { path: 'customer', model: User },

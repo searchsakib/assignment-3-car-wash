@@ -60,7 +60,8 @@ const createSlotIntoDB = async (paylod: TSlot) => {
 };
 
 const getAllAvailableSlotFromDB = async (query: Record<string, unknown>) => {
-  const queryObj: Partial<{ service: string; date: string }> = {};
+  const queryObj: Partial<{ service: string; date: string; isBooked: any }> =
+    {};
   if (query?.date) {
     queryObj.date = query.date as string;
   }
@@ -68,6 +69,8 @@ const getAllAvailableSlotFromDB = async (query: Record<string, unknown>) => {
   if (query?.serviceId) {
     queryObj.service = query.serviceId as string;
   }
+
+  queryObj.isBooked = { $ne: 'booked' };
 
   const result = await Slot.find(queryObj).populate('service');
   return result;
